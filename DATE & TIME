@@ -1,0 +1,67 @@
+-- 1) Retrieve all employees who joined the company in the year 2021. 
+SELECT *
+FROM employees
+WHERE YEAR(joining_date) = 2021;
+
+-- 2) Get emp_no, first name and joining date from employee table. Also calculate the number of days between the joining date and the current date for each employee as “day_worked”. 
+SELECT emp_no, first_name, joining_date, curdate()-joining_date AS day_worked
+FROM employees;
+
+SELECT emp_no, first_name, joining_date, DATEDIFF(CURRENT_DATE(),joining_date) AS days_worked 
+FROM employee;
+
+-- 3) Retrieve all the employees who joined the company in the month of June.
+SELECT * FROM employees
+WHERE MONTH(joining_date) = 6;
+ 
+-- 4) Display the first name of the employees who were hired in the last 1 Year.
+SELECT first_name
+FROM employees
+WHERE DATEDIFF(curdate(), joining_date) BETWEEN 0 AND 365;
+
+SELECT first_name 
+FROM employees 
+WHERE joining_date >= CURRENT_DATE() - INTERVAL 1 YEAR;
+
+-- 5) Calculate the total number of employees hired in each year from the employee table.
+SELECT YEAR(joining_date) AS year, COUNT(*) as num_employees
+FROM employees
+GROUP BY YEAR(joining_date)
+ORDER BY year;
+ 
+-- 6) Find the employees who have been with the company for more than 4 years. 
+SELECT emp_no, first_name, last_name, joining_date
+FROM employees
+WHERE DATEDIFF(curdate(), joining_date) > 365 * 4;
+
+SELECT * FROM employees 
+WHERE joining_date <= DATE_SUB(CURRENT_DATE(), INTERVAL 4 YEAR);
+
+-- 7) Calculate the total salary expenditure for each month in the year 2021.
+SELECT DATE_FORMAT(joining_date,'%M') AS hire_month, SUM(salary) AS total_expenditure 
+FROM employees
+WHERE YEAR(joining_date) = 2021 
+GROUP BY hire_month;
+
+-- 8) Retrieve emp_no, first name, joining date from employee table who has work experience less than 3 years in the company. 
+SELECT emp_no, first_name, joining_date
+FROM employees
+WHERE DATEDIFF(curdate(), joining_date) < 365 * 3;
+
+-- 9) Change the format of current date into this (May 26, 2023) format as formatted_date. 
+SELECT DATE_FORMAT(CURDATE(), "%M %d, %Y") AS formatted_date;
+
+-- 10)Change the format of current date into this (Friday, May 26, 2023) format as formatted_date.
+SELECT DATE_FORMAT(CURDATE(), "%W, %M %d, %Y") AS formatted_date;
+
+-- 11)Change the format of current date into this (YYYY/MM/DD) format.
+SELECT DATE_FORMAT(CURDATE(), "%Y/%m/%d") AS formatted_date;
+ 
+-- 12)Display current time in 12-hour format with AM/PM inside parenthesis (hh:mi:ss (AM/PM)) as formatted_time. Example 07:53:46 (PM).
+SELECT DATE_FORMAT(CURRENT_TIME(), "%r") AS formatted_time;
+ 
+-- 13)Display current time in 24-hour format without seconds (HH:MM) as formatted_time. 
+SELECT DATE_FORMAT(CURRENT_TIME(), "%H:%i") AS formatted_time;
+
+-- 14)Display the current timestamp with the day of the week, month, day, year, and time in the format Day, Month DD, YYYY HH:MM:SS as formatted_timestamp. Example- May 26, 2023 19:58:19 PM
+SELECT DATE_FORMAT(CURRENT_TIME(), "%M %d, %Y %r") AS formatted_timestamp;
