@@ -1,0 +1,24 @@
+1. Write a query to display all the records of employee Table.
+ SELECT * FROM employee;
+ 
+ 2.  Write a query to display unique salary of employee table.
+ SELECT DISTINCT salary FROM employee
+ WHERE salary IS NOT NULL
+ ORDER BY salary;
+ 
+ 3. Write a query to display all data of name and dob column of employee table.
+ SELECT name, dob FROM employee
+ ORDER BY dob;
+ 
+ 4. Write a query to display Id , name and the annual salary with the column name 'annual_salary' from the employee table.
+ SELECT id, name, salary*12 AS annual_salary
+ FROM employee
+ GROUP BY id, name;
+ 
+ 5. Write a query to display unique combination of salary and department of the employee table
+ SELECT DISTINCT salary, department
+ FROM employee;
+ 
+ 6. Write a query to get id and display Name with salary in parentheses() from the employee table and the resultant column name should be emp_detail.
+ SELECT id, CONCAT(name,'(',salary,')') AS emp_detail
+ FROM employee;
