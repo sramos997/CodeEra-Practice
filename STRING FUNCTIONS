@@ -1,0 +1,39 @@
+-- 1) Write a query to get the details of the employees where the length of the first name greater than or equal to 8. 
+SELECT * FROM employees
+WHERE LENGTH(first_name) >= 8;
+
+-- 2) Write a query to retrieve the output as shown below. NOTE : emp_no must be less than or equal to 1010
+SELECT emp_no, first_name, CONCAT(first_name, '.', last_name, '@demo.com') AS email
+FROM employees
+WHERE emp_no <= 1010;
+
+-- 3) Retrieve emp_no ,first name and last name of employees in uppercase. 
+SELECT emp_no, UPPER(first_name) AS upper_first , UPPER(last_name) AS upper_last
+FROM employees;
+
+-- 4) Retrieve the month from the birth date for each employee as “birth_month”. 
+SELECT emp_no, first_name, last_name, MONTHNAME(birth_date) AS birth_month
+FROM employees;
+
+-- 5) Display 2023 at place of 2020 in joininh date of the employee and also retrieve emp_no and first name from employee table 
+SELECT emp_no, first_name, REPLACE(joining_date, 2020, 2023) 
+FROM employees;
+
+-- 6) Retrieve the first name and last name of employees with 'son' as the last three characters of their last name. 
+SELECT first_name, last_name
+FROM employees
+WHERE last_name LIKE '%son';
+
+-- 7) Get emp_no of the employees and display department name in reverse order.
+SELECT emp_no, REVERSE(department) 
+FROM employees;
+
+-- 8) Write a query to get the details of the employees where the length of the first name greater length of last name. 
+SELECT * FROM employees
+WHERE LENGTH(first_name) > LENGTH(last_name);
+
+-- 9) Retrieve the first 4 character from the salary of each employee as “new_salary”.
+SELECT emp_no, first_name, salary, SUBSTRING(salary, 1, 4) AS new_salary
+FROM employees;
+
+SELECT LEFT(salary, 4) as 'new_salary' FROM employee;
