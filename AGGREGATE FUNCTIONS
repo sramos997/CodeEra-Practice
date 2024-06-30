@@ -1,0 +1,45 @@
+-- 1) Find the number of male employee as total_male from "employee" table. 
+SELECT COUNT(*) AS total_male
+FROM employees
+WHERE gender = 'M';
+
+-- 2) Write a SQL query to find the number of employees whose first name starts with the letter ‘J’ from "employee" table. 
+SELECT COUNT(*) AS total_J
+FROM employees
+WHERE first_name LIKE 'J%';
+
+-- 3) Find the total salary of employees whose employee numbers (emp_no) are between 1010 and 1020 from "employee" table. 
+SELECT SUM(salary) AS total_salary
+FROM employees
+WHERE emp_no BETWEEN 1010 AND 1020;
+
+-- 4) Write a SQL query to calculate the total annual salary of all employees as annual_salary in the HR department from "employee" table.
+SELECT SUM(SALARY * 12) AS total_annual_salary
+FROM employees
+WHERE department = 'HR';
+
+-- 5) Find the average salary of all employees as avg_salary from "employee" table. 
+SELECT AVG(salary) AS avg_salary
+FROM employees;
+
+-- 6) Find the average salary of employees working in the IT department from "employee" table. 
+SELECT AVG(salary) AS avg_IT_salary
+FROM employees
+WHERE department = 'IT';
+
+-- 7) Write a SQL query to find the earliest joining date as min_joining_date among all employees in the "employee" table. 
+SELECT MIN(joining_date) AS min_joining_date
+FROM employees;
+
+-- 8) Find the minimum salary of employees working in the Finance department as min_salary from "employee" table. 
+SELECT MIN(salary) AS min_salary
+FROM employees
+WHERE department = 'Finance';
+
+-- 9) Find the maximum birth date among all employees from "employee" table as max_dob.
+SELECT MAX(birth_date) AS max_dob
+FROM employees;
+
+-- 10) What is the highest employee number (emp_no) in the "employee" table
+SELECT MAX(emp_no) as max_emp_no
+FROM employees;
