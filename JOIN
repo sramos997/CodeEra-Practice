@@ -1,0 +1,93 @@
+CREATE TABLE products (   
+prod_id char(10) NOT NULL,   
+vend_id char(10),   
+prod_name char(255) NOT NULL,   
+prod_price decimal(8,2) NOT NULL,   
+prod_desc text,   
+PRIMARY KEY (prod_id),  
+FOREIGN KEY (vend_id) 
+REFERENCES vendors (vend_id));
+
+INSERT INTO products(prod_id, vend_id, prod_name, prod_price, prod_desc) VALUES
+('BR01', 'BRS01', '8 inch teddy bear', 5.99, '8 inch teddy bear, comes with cap and jacket'), 
+('BR02', NULL, '12 inch teddy bear', 8.99, '12 inch teddy bear, comes with cap and jacket'), 
+('BR03', 'BRS01', '18 inch teddy bear', 11.99, '18 inch teddy bear, comes with cap and jacket'), 
+('BNBG01', 'DLL01', 'Fish bean bag toy', 3.49, 'Fish bean bag toy, complete with bean bag worms with which to feed it'), 
+('BNBG02', 'DLL01', 'Bird bean bag toy', 3.49, 'Bird bean bag toy, eggs are not included'), 
+('BNBG03', NULL, 'Rabbit bean bag toy', 3.49, 'Rabbit bean bag toy, comes with bean bag carrots'), 
+('RGAN01', 'DLL01', 'Raggedy Ann', 4.99, '18 inch Raggedy Ann doll'), 
+('RYL01', 'FNG01', 'King doll', 9.49, '12 inch king doll with royal garments and crown'), 
+('RYL02', 'FNG01', 'Queen doll', 9.49, '12 inch queen doll with royal garments and crown');
+
+SELECT * FROM products;
+
+CREATE TABLE vendors 
+(vend_id char(10) NOT NULL,   
+vend_name char(50) NOT NULL, 
+vend_address char(50) , 
+vend_city char(50), 
+vend_state char(5), 
+vend_zip char(10), 
+vend_country char(50),
+PRIMARY KEY (vend_id));
+
+INSERT INTO Vendors(vend_id, vend_name, vend_address, vend_city, vend_state, vend_zip, vend_country) VALUES
+('BRS01','Bears R Us','123 Main Street','Bear Town','MI','44444', 'USA'), 
+('BRE02','Bear Emporium','500 Park Street','Anytown','OH','44333', 'USA'), 
+('DLL01','Doll House Inc.','555 High Street','Dollsville','CA','99999', 'USA'), 
+('FRB01','Furball Inc.','1000 5th Avenue','New York','NY','11111', 'USA'), 
+('FNG01','Fun and Games','42 Galaxy Road','London', NULL,'N16 6PS', 'England'), 
+('JTS01','Jouets et ours','1 Rue Amusement','Paris', NULL,'45678', 'France');
+
+
+-- 1) Write SQL query to retrieve the product ID, product name, and vendor name from the "Products" table and "Vendors" table, 
+--    sorted in ascending order by product ID? 
+SELECT p.prod_id, p.prod_name, v.vend_name
+FROM products p JOIN vendors v
+ON p.vend_id = v.vend_id
+ORDER BY p.prod_id ASC;
+
+-- 2) Write SQL query to retrieve the product ID, product name, vendor name, and vendor country  for products sold by vendors in the USA, 
+--    sorted by product ID? 
+SELECT p.prod_id, p.prod_name, v.vend_name, v.vend_country
+FROM products p JOIN vendors v
+ON p.vend_id = v.vend_id
+WHERE v.vend_country = 'USA'
+ORDER BY p.prod_id ASC;
+
+-- 3) Write SQL query to retrieve the product ID, product name, vendor name, and product price from the "Products" table, 
+--    joined with the "Vendors" table, where the product price is less than 5, and the results are sorted by the product ID?
+SELECT p.prod_id, p.prod_name, v.vend_name, p.prod_price
+FROM products p JOIN vendors v
+ON p.vend_id = v.vend_id
+WHERE p.prod_price < 5
+ORDER BY p.prod_id ASC;
+
+-- 4) Write SQL query to retrieve the product ID, vendor ID, and vendor city for all products, sorted by the vendor ID? 
+SELECT p.prod_id, v.vend_id, v.vend_city
+FROM products p LEFT JOIN vendors v
+ON p.vend_id = v.vend_id
+ORDER BY v.vend_id;
+
+-- 5) Write SQL query to retrieve vendor name and calculates the total amount of products sold by each vendor as “total_amount”. 
+--    Sort the results in ascending order based on the total amount?
+SELECT v.vend_name, COUNT(p.prod_id) AS total_amount
+FROM products p RIGHT JOIN vendors v
+ON p.vend_id = v.vend_id
+GROUP BY v.vend_name
+ORDER BY total_amount;
+
+-- 6) Write SQL query to retrieve vendor name and calculate total amount including 5% GST for each vendor's products as 
+--    “total_amount_GST_5”? Can you provide the result in ascending order based on the total amount? 
+SELECT v.vend_name, 1.05 * prod_price AS total_amount_GST_5
+FROM products p RIGHT JOIN vendors v
+ON p.vend_id = v.vend_id
+ORDER BY total_amount_GST_5;
+
+-- 7) Write SQL query to retrieve the product ID, vendor ID, product name, vendor name, and product price from the "Products" table, 
+--    joined with the "vendors" table, where the vendor ID ends with '01' and the product price is greater than 4?
+SELECT p.prod_id, v.vend_id, p.prod_name, v.vend_name, p.prod_price
+FROM products p JOIN vendors v
+ON p.vend_id = v.vend_id
+WHERE v.vend_id LIKE '%01'
+AND p.prod_price > 4;
